@@ -21,7 +21,6 @@ export class TenantConnectionService {
     }
 
     const tenantSchema = this.tenantContext.getSchemaName();
-
     if (!tenantSchema) {
       throw new Error('Tenant schema not found in request');
     }
