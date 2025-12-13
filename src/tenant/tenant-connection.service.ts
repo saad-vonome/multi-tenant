@@ -1,6 +1,8 @@
-import { Inject, Injectable, Scope } from '@nestjs/common';
-import { REQUEST } from '@nestjs/core';
+//tenant-connection.service.ts
+
+import { Injectable, Scope } from '@nestjs/common';
 import { DataSource, EntityManager } from 'typeorm';
+import { TenantContextService } from './tenant-context.service';
 
 export const TENANT_CONNECTION = 'TENANT_CONNECTION';
 
@@ -9,20 +11,16 @@ export class TenantConnectionService {
   private entityManager: EntityManager;
 
   constructor(
-    @Inject(REQUEST) private readonly request: Request,
     private dataSource: DataSource,
+    private readonly tenantContext: TenantContextService,
   ) {}
-
-  getTenantSchema(): string {
-    return this.request['tenantSchema'];
-  }
 
   async getConnection(): Promise<EntityManager> {
     if (this.entityManager) {
       return this.entityManager;
     }
 
-    const tenantSchema = this.getTenantSchema();
+    const tenantSchema = this.tenantContext.getSchemaName();
 
     if (!tenantSchema) {
       throw new Error('Tenant schema not found in request');

@@ -1,6 +1,7 @@
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -19,20 +20,17 @@ export class Tenant {
   @Column({ unique: true, length: 63 })
   tenantSchema: string;
 
-  @Column({ unique: true, nullable: true, length: 255 })
-  subdomain: string;
-
   @Column({ default: true })
   isActive: boolean;
 
-  @Column({ type: 'jsonb', nullable: true })
-  metadata: Record<string, any>;
-
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: Date;
+
+  @DeleteDateColumn({ type: 'timestamptz' })
+  deletedAt: Date;
 
   @OneToMany(() => Configuration, (configuration) => configuration.tenant)
   configurations: Configuration[];

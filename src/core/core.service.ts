@@ -5,9 +5,9 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { CreateTenantDto } from '../dto/create-tenant.dto';
-import { Configuration } from '../entities/configuration.entity';
-import { Tenant } from '../entities/tenant.entity';
+import { CreateTenantDto } from './dto/create-tenant.dto';
+import { Configuration } from './entities/configuration.entity';
+import { Tenant } from './entities/tenant.entity';
 
 @Injectable()
 export class CoreService {
@@ -44,18 +44,6 @@ export class CoreService {
   async getTenantBySchema(schema: string): Promise<Tenant> {
     const tenant = await this.tenantRepository.findOne({
       where: { tenantSchema: schema, isActive: true },
-    });
-
-    if (!tenant) {
-      throw new NotFoundException('Tenant not found or inactive');
-    }
-
-    return tenant;
-  }
-
-  async getTenantBySubdomain(subdomain: string): Promise<Tenant> {
-    const tenant = await this.tenantRepository.findOne({
-      where: { subdomain, isActive: true },
     });
 
     if (!tenant) {

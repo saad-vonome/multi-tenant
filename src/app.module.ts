@@ -1,9 +1,11 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TenantMiddleware } from './common/middleware/tenant.middleware';
 import databaseConfig from './config/database.config';
 import { CoreModule } from './core/core.module';
+import { TenantMiddleware } from './middleware/tenant.middleware';
+import { PatientsModule } from './patients/patients.module';
+import { TenantContextService } from './tenant/tenant-context.service';
 import { TenantModule } from './tenant/tenant.module';
 
 @Module({
@@ -20,7 +22,9 @@ import { TenantModule } from './tenant/tenant.module';
     }),
     CoreModule,
     TenantModule,
+    PatientsModule,
   ],
+  providers: [TenantContextService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

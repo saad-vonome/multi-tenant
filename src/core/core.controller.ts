@@ -1,15 +1,15 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { CreateTenantDto } from '../dto/create-tenant.dto';
-import { CoreService } from '../services/core.service';
+import { CoreService } from './core.service';
+import { CreateTenantDto } from './dto/create-tenant.dto';
 
-@Controller('api/tenants')
+@Controller('tenants')
 export class CoreController {
   constructor(private coreService: CoreService) {}
 
   @Post()
-  async createTenant(@Body() createTenantDto: CreateTenantDto) {
+  async createTenant(@Body() dto: CreateTenantDto) {
     // Create tenant and schema
-    const tenant = await this.coreService.createTenant(createTenantDto);
+    const tenant = await this.coreService.createTenant(dto);
 
     return {
       message: 'Tenant created successfully',
