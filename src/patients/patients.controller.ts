@@ -16,7 +16,7 @@ export class PatientsController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() dto: CreatePatientDto) {
-    return await this.patientsService.addPatient(dto);
+    // return await this.patientsService.addPatient(dto);
   }
 
   @Get()

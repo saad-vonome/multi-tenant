@@ -5,8 +5,6 @@ import databaseConfig from './config/database.config';
 import { CoreModule } from './core/core.module';
 import { TenantMiddleware } from './middleware/tenant.middleware';
 import { PatientsModule } from './patients/patients.module';
-import { TenantContextService } from './tenant/tenant-context.service';
-import { TenantModule } from './tenant/tenant.module';
 
 @Module({
   imports: [
@@ -21,10 +19,9 @@ import { TenantModule } from './tenant/tenant.module';
       }),
     }),
     CoreModule,
-    TenantModule,
     PatientsModule,
   ],
-  providers: [TenantContextService],
+  providers: [],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
