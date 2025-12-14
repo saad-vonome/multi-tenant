@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+model Tenant {
+  id    String  @default(uuid()) @id
+  email String  @unique
+  name  String
+  schemaName String @unique
+  isActive Boolean
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+  deletedAt DateTime @default(now()) @db.Timestamptz(3)
+}
+
+model Patients {
+  id       String  @default(uuid()) @id
+  name     String
+  email    String?
+  age      Int 
+  isActive Boolean
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+  deletedAt DateTime @default(now()) @db.Timestamptz(3)
+}
